@@ -1,22 +1,23 @@
 //your JS code here. If required.
-document.getElementById("btn").addEventListener("click", async () => {
-	
-  const text = document.getElementById("text").value.trim();
-  const delay = parseInt(document.getElementById("delay").value, 10);
-  const output = document.getElementById("output");
+document.getElementById("btn").addEventListener("click", async function () {
+    const text = document.getElementById("text").value;
+    const delay = document.getElementById("delay").value;
+    const output = document.getElementById("output");
+    
+    if (!text || !delay) {
+        alert("Please enter both text and delay.");
+        return;
+    }
 
+    
+    function delayMessage(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-	if (!text || isNaN(delay) || delay < 0) {
-    output.textContent = "Please enter a valid message and delay time.";
-    return;
-  }
+    async function showMessage() {
+        await delayMessage(Number(delay));
+        output.innerText = text;
+    }
 
-
-	  output.textContent = "Waiting...";
-
-	await new Promise((resolve) => setTimeout(resolve, delay));
-
-  output.textContent = text;
+    showMessage();
 });
-
-	
